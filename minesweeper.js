@@ -129,6 +129,6 @@ function countSurroundingMines (cell) {
     if(surrounding[i].isMine == true){
       count++;
     }
-    return count;
   }
+  return count;
 }
