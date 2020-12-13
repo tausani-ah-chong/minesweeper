@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', startGame)
+document.addEventListener("click", checkForWin);
+document.addEventListener("contextmenu", checkForWin);
 
 // Define your `board` object here!
 var board = {
@@ -71,14 +73,11 @@ var board = {
 } 
 
 function startGame () {
-
-  // create for.each loop
-  // call countSurroundingMines for every cell, pass cell into ()
-  // assign result to surroundingMines
-  var cellCont = board.cells
-  for (var i = 0; i < cellCont.length; i++) {
-    cellCont[i].surroundingMines = countSurroundingMines(i);
+  
+  for (var i = 0; i < board.cells.length; i++) {
+    board.cells[i].surroundingMines = countSurroundingMines(board.cells[i]);
   }
+
   // Don't remove this function call: it makes the game work!
   lib.initBoard()
 }
@@ -89,10 +88,32 @@ function startGame () {
 // 2. Are all of the mines marked?
 function checkForWin () {
 
+  var mineCount = 0
+  var clearedCount = 0
+
+  for(var i = 0; i < board.cells.length; i++){
+    
+    if (board.cells[i].isMine == true && board.cells[i].isMarked == true) {
+      mineCount++;
+    }
+
+    if (board.cells[i].hidden == false) {
+      clearedCount++;
+    }
+
+    console.log(mineCount)
+    console.log(clearedCount)
+  }
+  
+  if (mineCount + clearedCount == board.cells.length) {
+    lib.displayMessage('You win!');
+  }
+      
+}
+
   // You can use this function call to declare a winner (once you've
   // detected that they've won, that is!)
   //   lib.displayMessage('You win!')
-}
 
 // Define this function to count the number of mines around the cell
 // (there could be as many as 8). You don't have to get the surrounding
@@ -102,14 +123,14 @@ function checkForWin () {
 //
 // It will return cell objects in an array. You should loop through 
 // them, counting the number of times `cell.isMine` is true.
+
 function countSurroundingMines (cell) {
+  var surrounding = lib.getSurroundingCells(cell.row, cell.col);
   var count = 0;
-  var surrounding = lib.getSurroundingCells(board.cells[cell].row, board.cells[cell].col)
-  console.log(surrounding);
-  for (var i = 0; i < surrounding.length; i++) {
-    if (surrounding[i].isMine === true) {
+  for(var i = 0; i < surrounding.length; i++){
+    if(surrounding[i].isMine == true){
       count++;
     }
+    return count;
   }
-  return count;
 }
