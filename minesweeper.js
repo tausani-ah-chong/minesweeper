@@ -65,7 +65,7 @@ var board = {
     { 
       row: 3,
       col: 3,
-      isMine: false,
+      isMine: true,
       isMarked: false,
       hidden: true
     }
