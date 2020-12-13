@@ -101,8 +101,6 @@ function checkForWin () {
       clearedCount++;
     }
 
-    console.log(mineCount)
-    console.log(clearedCount)
   }
   
   if (mineCount + clearedCount == board.cells.length) {
